@@ -1,0 +1,38 @@
+import pandas as pd
+import codecs
+import datetime
+import re
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from datetime import datetime 
+%config InlineBackend.figure_format = 'retina'
+%matplotlib inline
+from bokeh.plotting import figure, output_file, show
+from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.api import VAR
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
+from statsmodels.graphics.tsaplots import plot_pacf
+from statsmodels.tsa.seasonal import seasonal_decompose
+from sklearn.model_selection import train_test_split
+%config InlineBackend.figure_format = 'retina'
+%matplotlib inline
+from sklearn.metrics import r2_score, mean_squared_error
+# This will allow us to avoid a FutureWarning when plotting.
+
+from pandas.plotting import register_matplotlib_converters
+register_matplotlib_converters()
+from statsmodels.graphics.tsaplots import plot_acf
+
+df = pd.read_csv(r"C:\Users\pplass\OneDrive - FEMA\Desktop\RAD Data\FemaWebDeclarationAreas.csv")
+new_df = df[(df.programTypeCode =="HA") & 
+   (df.stateCode == "TX") & 
+   (df.designatedDate >= '2016-01-01') & 
+   (df.designatedDate <= '2020-12-31')]
+   new_df["FIPS_code"] = '48' + new_df['placeCode'].apply(str).str[-3:]
+new_df['disasterNumber'].unique()
+new_df.head()
